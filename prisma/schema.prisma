@@ -28,7 +28,6 @@ model Commerce {
 model Product {
   id             String        @id @default(uuid())
   name           String
-  description    String
   price          Float
   quantity       Int           @default(0)
   unit           String
@@ -60,6 +59,6 @@ model Transaction {
   productId      String
   commerceId  String?
   product        Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
-  association    Commerce?  @relation(fields: [commerceId], references: [id])
+  commerce    Commerce?  @relation(fields: [commerceId], references: [id])
   createdAt      DateTime      @default(now())
 }
