@@ -49,16 +49,6 @@ const page = () => {
             toast.error("Le nom du produit ne peut pas être vide.")
             return false
         }
-        if (/[^a-zA-Z\s]/.test(formData.name)) {
-            toast.error("Le nom du produit ne peut contenir que des lettres et des espaces.")
-            return false
-        }
-
-        // Vérifier le prix : uniquement des chiffres de 1 à 9
-        if (!/^[1-9]\d*$/.test(formData.price.toString())) {
-            toast.error("Le prix doit être un nombre valide entre 1 et 9 (sans caractères spéciaux).")
-            return false
-        }
 
         // Vérifier la catégorie
         if (!formData.categoryId) {
@@ -115,7 +105,13 @@ const page = () => {
                             <input type="text" name='name' placeholder='Nom du produit'
                                 className='input input-bordered w-full'
                                 value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    // Optionally, you can restrict input here or just update state
+                                    if(/^[a-zA-Z0-9]+$/.test(value) || value === '') {
+                                        setFormData({ ...formData, name: value });
+                                    }
+                                }}
                             />
 
                             <div className='relative'>
@@ -149,7 +145,7 @@ const page = () => {
                                     }}
                                 />
 
-                                <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">F CFA</span>
+                                <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">Frfca</span>
                             </div>
 
                             <select className='select select-bordered w-full'

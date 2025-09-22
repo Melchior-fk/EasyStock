@@ -1,7 +1,7 @@
 import { Product as PrismaProduct } from "./app/generated/prisma";
 
 export interface Product extends PrismaProduct {
-    categoryName: string;
+    categoryName?: string;
 }
 
 export interface FormDataType {
@@ -10,7 +10,6 @@ export interface FormDataType {
     price: number;
     quantity?: number;
     categoryId?: string;
-    unit?: string;
     categoryName?: string;
     imageUrl?: string;
 }

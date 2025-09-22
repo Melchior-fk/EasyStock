@@ -20,8 +20,9 @@ const Navbar: React.FC = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
 
   const navLinks: LinkItem[] = [
+    { label: 'Ma liste', href: '/products', icon: ShoppingBasket},
     { label: 'Catégories', href: '/category', icon: ListTree},
-    { label: 'Produits', href: '/product', icon: ShoppingBasket}
+    { label: 'Nouveau produit', href: '/newproduct', icon: PackagePlus},
   ];
 
   useEffect(() => {

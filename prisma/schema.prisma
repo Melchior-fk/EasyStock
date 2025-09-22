@@ -28,9 +28,8 @@ model Commerce {
 model Product {
   id             String        @id @default(uuid())
   name           String
-  price          Float
+  price          Int
   quantity       Int           @default(0)
-  unit           String
   imageUrl       String
 
   categoryId     String

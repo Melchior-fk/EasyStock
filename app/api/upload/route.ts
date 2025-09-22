@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         const bytes = await file.arrayBuffer()
         const buffer = Buffer.from(bytes)
 
-        const uploadDir = join(process.cwd(), "public", "uploads")
+        const uploadDir = join(process.cwd(), "public", "upload")
         if (!existsSync(uploadDir)) {
             await mkdir(uploadDir, { recursive: true })
         }
@@ -24,10 +24,31 @@ export async function POST(request: NextRequest) {
         const UniqueName = crypto.randomUUID() + '.' + ext
         const filePath = join(uploadDir, UniqueName)
         await writeFile(filePath, buffer)
-        const publicPath = `/uploads/${UniqueName}`
+        const publicPath = `/upload/${UniqueName}`
         return NextResponse.json({ success: true, path: publicPath })
         
     } catch (error) {
+        console.error(error)
+    }
+}
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const { path } = await request.json()
+        if (!path) {
+            return NextResponse.json({ success: false, message: "Chemin invalide." }, { status: 400 });
+        }
+
+        const filePath = join(process.cwd(), "public", path)
+
+        if (!existsSync(filePath)) {
+            return NextResponse.json({ success: false, message: "Fichier supprimé avec succès." }, { status: 201 });
+        }
+
+        await unlink(filePath)
+        return NextResponse.json({ success: true, message: "Fichier non trouvé." }, { status: 404 });
+    }
+    catch (error) {
         console.error(error)
     }
 }

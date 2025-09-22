@@ -140,12 +140,11 @@ export async function readCategories(email: string): Promise<Category[] | undefi
 
 export async function createProduct(formData: FormDataType, email: string) {
     try {
-        const { name, price, imageUrl, categoryId, unit } = formData;
+        const { name, price, imageUrl, categoryId } = formData;
         if (!email || !price || !categoryId || !email) {
             throw new Error("Le nom, le prix, la catégorie et l'email du commerce sont requis pour la création du produit.")
         }
         const safeImageUrl = imageUrl || ""
-        const safeUnit = unit || ""
 
         const commerce = await getCommerce(email)
         if (!commerce) {
@@ -158,7 +157,6 @@ export async function createProduct(formData: FormDataType, email: string) {
                 price: Number(price),
                 imageUrl: safeImageUrl,
                 categoryId,
-                unit: safeUnit,
                 commerceId: commerce.id
             }
         })
