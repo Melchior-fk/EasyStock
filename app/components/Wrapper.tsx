@@ -14,7 +14,7 @@ const Wrapper = ({children} : wrapperProps) => {
         <Navbar />
         <ToastContainer 
             position='top-right'
-            autoClose={500}
+            autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

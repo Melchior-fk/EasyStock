@@ -41,7 +41,6 @@ export async function getCommerce(email: string) {
 export async function createCategory(
     name: string,
     email: string,
-    description?: string
 ) {
 
     if (!name) return
@@ -53,7 +52,6 @@ export async function createCategory(
         await prisma.category.create({
             data: {
                 name,
-                description: description || "",
                 commerceId: commerce.id
             }
         })
@@ -67,7 +65,6 @@ export async function updateCategory(
     id: string,
     email: string,
     name: string,
-    description?: string,
 ) {
 
     if (!id || !email || !name) {
@@ -77,7 +74,7 @@ export async function updateCategory(
     try {
         const commerce = await getCommerce(email)
         if (!commerce) {
-            throw new Error("Aucun compte trouvé avec cet email.");
+            throw new Error("Aucun commerce trouvé avec cet email.");
         }
 
         await prisma.category.update({
@@ -87,7 +84,6 @@ export async function updateCategory(
             },
             data: {
                 name,
-                description: description || "",
             }
         })
 

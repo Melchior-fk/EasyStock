@@ -48,7 +48,6 @@ model Product {
 model Category {
   id             String        @id @default(uuid())
   name           String
-  description    String?
   commerceId  String?
   commerce    Commerce?  @relation(fields: [commerceId], references: [id])
   products       Product[]
