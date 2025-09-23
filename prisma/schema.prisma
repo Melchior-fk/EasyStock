@@ -19,7 +19,6 @@ model Commerce {
   id           String        @id @default(uuid())
   name         String
   email        String        @unique
-
   products     Product[]
   categories   Category[]
   transactions Transaction[]
@@ -29,9 +28,9 @@ model Product {
   id             String        @id @default(uuid())
   name           String
   price          Int
+  unit           String
   quantity       Int           @default(0)
   imageUrl       String
-
   categoryId     String
   commerceId     String?
 

@@ -21,6 +21,7 @@ const page = () => {
     const [formData, setFormData] = React.useState<FormDataType>({
         name: "",
         price: 0,
+        unit: "",
         quantity: 0,
         categoryId: "",
         imageUrl: ""
@@ -50,9 +51,20 @@ const page = () => {
             return false
         }
 
+        if (formData.price === 0 || formData.price === '' as any) {
+            toast.error("Veuillez entrer un prix valide.")
+            return false
+        }
+
         // Vérifier la catégorie
         if (!formData.categoryId) {
             toast.error("Veuillez sélectionner une catégorie.")
+            return false
+        }
+
+        if (!formData.unit) {
+            toast.error("Veuillez sélectionner une unité.")
+            console.log("Unit selected:", formData.unit); // Pour vérifier ce qui est envoyé
             return false
         }
 
@@ -148,16 +160,38 @@ const page = () => {
                                 <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">Frfca</span>
                             </div>
 
-                            <select className='select select-bordered w-full'
+                            <select
+                                className='select select-bordered w-full'
                                 name='categoryId'
-                                onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                                value={formData.categoryId}>
+                                onChange={(e) => {
+                                    setFormData({ ...formData, categoryId: e.target.value });
+                                }}
+                                value={formData.categoryId}
+                            >
                                 <option value="">Sélectionner une catégorie</option>
                                 {categories.map((category) => (
                                     <option key={category.id} value={category.id}>
                                         {category.name}
                                     </option>
                                 ))}
+                            </select>
+
+                              <select
+                                className='select select-bordered w-full'
+                                value={formData.unit}
+                                onChange={(e) => {
+                                    setFormData({ ...formData, unit: e.target.value });
+                                }}
+                                name='unit'
+                            >
+                                <option value="">Sélectionner l'unité</option>
+                                <option value="bt">Bouteille(Sobraga)</option>
+                                <option value="g">Gramme</option>
+                                <option value="kg">Kilogramme</option>
+                                <option value="l">Litre</option>
+                                <option value="m">Mètre</option>
+                                <option value="cm">Centimètre</option>
+                                <option value="pcs">Pièces</option>
                             </select>
 
                             <input type="file"

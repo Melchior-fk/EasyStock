@@ -71,7 +71,7 @@ const page = () => {
 
     return (
         <Wrapper>
-            <div className='overflow-x-auto w-full'>
+            <div className=''>
                 {loadingProducts ? (  // Afficher le loader pendant le chargement des produits
                     <div className="flex justify-center items-center">
                         <span className="loading loading-spinner loading-lg"></span>
@@ -83,37 +83,24 @@ const page = () => {
                         IconComponent='PackageSearch'
                     />
                 ) : (  
-                    <table className='table w-full'>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Image</th>
-                                <th>Nom</th>
-                                <th>Prix</th>
-                                <th>Catégorie</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.map((product, index) => (
-                                <tr key={product.id}>
-                                    <th>#{index + 1}</th>
-                                    <td>
-                                        <ProductImage src={product.imageUrl} alt={product.imageUrl} heightClass='h-32' widthClass='w-32'/>
-                                    </td>
-                                    <td>{product.name}</td>
-                                    <td>{product.price} Frcfa</td>
-                                    <td>{product.categoryName}</td>
-                                    <td className='space-x-2'>
-                                        <Link className='btn btn-xs w-fit btn-primary' href={`/update-product/${product.id}`}>Modifier</Link>
-                                        <button onClick={() => handleDeleteProduct(product)} className='btn btn-xs w-fit'>
-                                            <Trash className='w-4 h-4'/>
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+                        {products.map((product) => (
+                            <div key={product.id} className='card shadow-sm p-2 relative'>
+                                <ProductImage src={product.imageUrl} alt={product.imageUrl} heightClass='h-full' widthClass='w-full' />
+                                <h2 className='text-lg font-semibold mt-2'>{product.name}</h2>
+                                <p className='text-primary font-bold'>Prix: {product.price} Frfca</p>
+                                <p className='text-gray-600 font-bold'>Quantité: {product.quantity} {product.unit}</p>
+                                <div className='flex space-x-2 mt-8'>
+                                    <Link href={`/update-product/${product.id}`} className='btn btn-sm btn-primary'>Modifier</Link>
+                                    <button
+                                        onClick={() => handleDeleteProduct(product)}
+                                        className='btn btn-sm btn-error'
+                                    ><Trash className='w-4 h-4' />
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 )}
             </div>
         </Wrapper>
@@ -121,3 +108,5 @@ const page = () => {
 }
 
 export default page
+
+                            

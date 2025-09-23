@@ -140,11 +140,12 @@ export async function readCategories(email: string): Promise<Category[] | undefi
 
 export async function createProduct(formData: FormDataType, email: string) {
     try {
-        const { name, price, imageUrl, categoryId } = formData;
-        if (!email || !price || !categoryId || !email) {
+        const { name, price, imageUrl, categoryId, unit} = formData;
+        if (!email || !price || !categoryId || !unit) {
             throw new Error("Le nom, le prix, la catégorie et l'email du commerce sont requis pour la création du produit.")
         }
-        const safeImageUrl = imageUrl || ""
+        const safeImageUrl = imageUrl ?? ""
+        const safeUnit = unit ?? ""
 
         const commerce = await getCommerce(email)
         if (!commerce) {
@@ -157,6 +158,7 @@ export async function createProduct(formData: FormDataType, email: string) {
                 price: Number(price),
                 imageUrl: safeImageUrl,
                 categoryId,
+                unit: safeUnit,
                 commerceId: commerce.id
             }
         })
@@ -169,7 +171,7 @@ export async function createProduct(formData: FormDataType, email: string) {
 export async function updateProduct(formData: FormDataType, email: string) {
     try {
         const { id, name, price, imageUrl } = formData;
-        if (!email || !price || !id || !email) {
+        if (!email || !price || !id) {
             throw new Error("L'id, le nom, le prix et l'email sont requis pour la mise à jour du produit.")
         }
 
