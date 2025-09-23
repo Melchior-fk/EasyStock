@@ -1,9 +1,10 @@
 import { UserButton, useUser } from '@clerk/nextjs';
-import { ListTree, Menu, PackagePlus, ShoppingBasket, X } from 'lucide-react';
+import { ListTree, Menu, PackagePlus, ShoppingBasket, Warehouse, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { checkAndAddCommerce } from '../actions';
+import Stock from './Stock';
 
 interface LinkItem {
   label: string;
@@ -47,6 +48,11 @@ const Navbar: React.FC = () => {
           </Link>
         );
       })}
+      <button className="btn btn-sm" 
+      onClick={()=>(document.getElementById('my_modal_stock') as HTMLDialogElement).showModal()}>
+        <Warehouse className='h-4 w-4' />
+        Approvisionner le stock
+      </button>
     </>
   );
 
@@ -85,6 +91,7 @@ const Navbar: React.FC = () => {
         </div>
         {renderLinks('btn w-full')}
       </div>
+      <Stock />
     </div>
   );
 };
